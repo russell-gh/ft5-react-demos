@@ -1,8 +1,15 @@
-.weatherItem {
-  background-color: lightblue;
-  margin: 20px;
+.character {
+  display: flex;
 }
 
-.fav {
-  background-color: yellow;
+/* .left {
+  order: 1;
+} */
+
+img {
+  width: 200px;
+}
+
+.liked {
+  background-color: cadetblue;
 }
