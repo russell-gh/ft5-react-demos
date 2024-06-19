@@ -4,7 +4,7 @@ import Character from "./Character";
 class Characters extends Component {
   render() {
     return (
-      <div className="characters">
+      <div className="characters" onClick={this.props.onLiked}>
         {this.props.characters.map((character, index) => {
           const {
             character: name,

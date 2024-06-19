@@ -15,7 +15,6 @@ class App extends Component {
       `https://thesimpsonsquoteapi.glitch.me/quotes?count=50`
     );
     //fixes api data
-
     data.forEach((element, index) => {
       element.id = index + 1;
     });
@@ -23,13 +22,18 @@ class App extends Component {
   };
 
   render() {
-    const { simpsons } = this.state;
+    const { simpsons, totalLiked } = this.state;
 
     if (!simpsons) {
       return <p>Loading...</p>;
     }
 
-    return <Characters characters={simpsons} />; //your work begins here!
+    return (
+      <>
+        <h1>Total liked: {totalLiked}</h1>
+        <Characters characters={simpsons} onLiked={this.onLiked} />
+      </>
+    );
   }
 }
 

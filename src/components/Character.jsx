@@ -17,7 +17,7 @@ class Character extends Component {
     if (characterDirection === "Left") {
       return (
         <div
-          onClick={this.onLikeToggle}
+          onClick={() => this.onLikeToggle("Hello")}
           className={liked ? "character liked" : "character notLiked"}
         >
           <Name name={name} />
