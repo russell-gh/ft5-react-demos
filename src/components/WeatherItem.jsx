@@ -14,6 +14,13 @@ class WeaterItem extends Component {
       >
         <Temp temp={temp} tempMax={temp_max} tempMin={temp_min} />
         <Wind speed={speed} gust={gust} />
+        <button
+          onClick={() => {
+            this.props.deleteItem(this.props.item.dt);
+          }}
+        >
+          Delete
+        </button>
       </div>
     );
   }
