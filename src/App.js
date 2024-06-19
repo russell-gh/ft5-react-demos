@@ -19,15 +19,26 @@ class App extends Component {
       `https://api.openweathermap.org/data/2.5/forecast?lat=1.22&lon=2.22&APPID=17a3e02a9cc47ed1eac90bc2f9c0012a`
     );
     this.setState({ weather: data });
-    console.log(data.list.length)
+  };
+
+  toggleFav = (dt) => {
+    const weather = { ...this.state.weather };
+
+    const indexOf = weather.list.findIndex((item) => {
+      return item.dt === dt;
+    });
+
+    weather.list[indexOf].fav = !weather.list[indexOf].fav;
+
+    this.setState({ weather });
   };
 
   render() {
     if (!this.state.weather) {
       return <p>Loading...</p>;
     }
-
-    return <Weather weather={this.state.weather} />;
+    // console.log(this.state.weather.list);
+    return <Weather toggleFav={this.toggleFav} weather={this.state.weather} />;
   }
 }
 
