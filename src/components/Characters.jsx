@@ -4,7 +4,7 @@ import Character from "./Character";
 class Characters extends Component {
   render() {
     return (
-      <div className="characters" onClick={this.props.onLiked}>
+      <div className="characters">
         {this.props.characters.map((character, index) => {
           const {
             character: name,
@@ -12,6 +12,7 @@ class Characters extends Component {
             image,
             id,
             characterDirection,
+            liked,
           } = character;
 
           return (
@@ -21,7 +22,10 @@ class Characters extends Component {
               name={name}
               quote={quote}
               image={image}
+              liked={liked}
               characterDirection={characterDirection}
+              onLikeToggle={this.props.onLikeToggle}
+              onDelete={this.props.onDelete}
             />
           );
         })}
