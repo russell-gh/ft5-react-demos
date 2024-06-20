@@ -1,8 +1,7 @@
 import React, { Component } from "react";
 import axios from "axios";
 import Weather from "./components/Weather";
-import styles from "./App.module.css";
-import { wait } from "@testing-library/user-event/dist/utils";
+import Controls from "./components/Controls";
 
 class App extends Component {
   state = { searchTerm: "" };
@@ -11,13 +10,6 @@ class App extends Component {
 
   componentDidMount() {
     this.getWeather();
-  }
-
-  componentDidUpdate() {
-    console.log(this.inputRef);
-    if (this.inputRef) {
-      this.inputRef.current.focus();
-    }
   }
 
   getWeather = async () => {
@@ -60,6 +52,7 @@ class App extends Component {
   };
 
   onInput = (e) => {
+    console.log("j");
     this.setState({ searchTerm: e.target.value });
   };
 
@@ -94,7 +87,7 @@ class App extends Component {
 
     return (
       <div>
-        <input ref={this.inputRef} type="text" onInput={this.onInput} />
+        <Controls onInput={this.onInput} searchTerm={this.state.searchTerm} />
         <Weather
           toggleFav={this.toggleFav}
           deleteItem={this.deleteItem}

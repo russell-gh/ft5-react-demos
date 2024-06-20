@@ -12,6 +12,7 @@ class WeaterItem extends Component {
         className={`weatherItem ${this.props.item.fav ? "fav" : ""}`}
         onClick={() => this.props.toggleFav(this.props.item.dt)}
       >
+        <div>{this.props.item.weather[0].description}</div>
         <Temp temp={temp} tempMax={temp_max} tempMin={temp_min} />
         <Wind speed={speed} gust={gust} />
         <button
