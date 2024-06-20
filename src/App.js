@@ -12,14 +12,18 @@ class App extends Component {
   }
 
   getSimpsons = async () => {
-    const { data } = await axios.get(
-      `https://thesimpsonsquoteapi.glitch.me/quotes?count=50`
-    );
-    //fixes api data
-    data.forEach((element, index) => {
-      element.id = index + 1;
-    });
-    this.setState({ simpsons: data });
+    try {
+      const { data } = await axios.get(
+        `https://thesimpsonsquoteapi.glitch.me/quotes?count=50`
+      );
+      //fixes api data
+      data.forEach((element, index) => {
+        element.id = index + 1;
+      });
+      this.setState({ simpsons: data });
+    } catch (e) {
+      this.setState({ error: "Api Down" });
+    }
   };
 
   onLikeToggle = (id) => {
@@ -32,6 +36,7 @@ class App extends Component {
       return;
     }
     simpsons[indexOf].liked = !simpsons[indexOf].liked;
+
     this.setState({ simpsons });
   };
 
@@ -56,22 +61,20 @@ class App extends Component {
     return <h1>Total liked: {liked.length}</h1>;
   };
 
-  onFilterInput = (e) => {
-    this.setState({ filterInput: e.target.value });
-  };
-
-  onSelectChange = (e) => {
-    this.setState({ selectValue: e.target.value });
+  onFormEvent = (e) => {
+    this.setState({
+      [e.target.id]: e.target.value,
+    });
   };
 
   getSimpsonsToDisplay = () => {
     //filter based on search
     let filtered = [...this.state.simpsons];
-    if (this.state.filterInput) {
+    if (this.state.text) {
       filtered = filtered.filter((item) => {
         return item.character
           .toLowerCase()
-          .includes(this.state.filterInput.toLowerCase());
+          .includes(this.state.text.toLowerCase());
       });
     }
 
@@ -89,7 +92,7 @@ class App extends Component {
       return 0;
     });
 
-    if (this.state.selectValue === "DESC") {
+    if (this.state.select === "DESC") {
       filtered.reverse();
     }
 
@@ -98,7 +101,11 @@ class App extends Component {
 
   render() {
     console.log(this.state);
-    const { simpsons } = this.state;
+    const { simpsons, error } = this.state;
+
+    if (error) {
+      return <h1>API down, try later!</h1>;
+    }
 
     if (!simpsons) {
       return <p>Loading...</p>;
@@ -106,10 +113,7 @@ class App extends Component {
 
     return (
       <>
-        <CharactersControls
-          onFilterInput={this.onFilterInput}
-          onSelectChange={this.onSelectChange}
-        />
+        <CharactersControls callback={this.onFormEvent} />
         {this.getTotalLiked()}
         <Characters
           characters={this.getSimpsonsToDisplay()}

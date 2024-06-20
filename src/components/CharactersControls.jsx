@@ -1,14 +1,18 @@
 import React, { Component } from "react";
+import FormElement from "./FormElement";
 
 class CharactersControls extends Component {
   render() {
+    const { callback } = this.props;
     return (
       <>
-        <input type="text" onInput={this.props.onFilterInput} />
-        <select onChange={this.props.onSelectChange}>
-          <option value="ASC">ASC</option>
-          <option value="DESC">DESC</option>
-        </select>
+        <FormElement id="text" type="text" callback={callback} />
+        <FormElement
+          id="select"
+          type="select"
+          callback={callback}
+          options={["ASC", "DESC"]}
+        />
       </>
     );
   }
