@@ -1,9 +1,7 @@
-import React, { Component } from "react";
+import React from "react";
 
-class Name extends Component {
-  render() {
-    return <h2>{this.props.name}</h2>;
-  }
+function Name({ name }) {
+  return <h2>{name}</h2>;
 }
 
 export default Name;
