@@ -1,27 +1,32 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 
 const App = () => {
-  const [count, setCount] = useState(0);
   const [active, setActive] = useState(false);
 
-  const add = () => {
-    setCount(count + 1);
-  };
-  const rem = () => {
-    setCount(count - 1);
-  };
-  const toggle = () => {
-    setActive(!active);
-  };
+  useEffect(() => {
+    //like component did mount AND update
+    console.log("useEffect ran, no dep array");
+  });
+
+  useEffect(() => {
+    console.log("useEffect ran, WITH dep array, COMPONENT DID MOUNT");
+  }, []); //run once, just like component did mount
+
+  useEffect(() => {
+    console.log(
+      "useEffect ran, WITH dep array for active, COMPONENT DID UPDATE"
+    );
+  }, [active]);
 
   return (
     <>
-      <p>
-        {count} {active ? "Active" : "Inactive"}
-      </p>
-      <button onClick={add}>Add 1</button>
-      <button onClick={rem}>Rem 1</button>
-      <button onClick={toggle}>Toggle</button>
+      <button
+        onClick={() => {
+          setActive(!active);
+        }}
+      >
+        Toggle
+      </button>
     </>
   );
 };
