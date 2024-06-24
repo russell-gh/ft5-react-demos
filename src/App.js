@@ -1,32 +1,45 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import axios from "axios";
 import "./App.css";
 import Characters from "./components/Characters";
 import CharactersControls from "./components/CharactersControls";
+// import { get, store } from "./utils/storage";
+import { useLocalStorage } from "./components/hooks";
 
 const App = () => {
-  const [simpsons, setSimpsons] = useState();
+  const [simpsons, setSimpsons] = useLocalStorage({ key: "simpsons" });
   const [formData, setFormData] = useState({});
   const [error, setError] = useState();
+  const [count, setCount] = useState(50);
 
-  const getSimpsons = async () => {
+  //always the same version of the getSimpsons func
+  const getSimpsons = useCallback(async () => {
     try {
-      const { data } = await axios.get(
-        `https://thesimpsonsquoteapi.glitch.me/quotes?count=50`
-      );
-      //fixes api data
-      data.forEach((element, index) => {
-        element.id = index + 1;
-      });
-      setSimpsons(data);
+      if (!simpsons) {
+        const { data } = await axios.get(
+          `https://thesimpsonsquoteapi.glitch.me/quotes?count=${count}`
+        );
+        //fixes api data
+        data.forEach((element, index) => {
+          element.id = index + 1;
+        });
+        setSimpsons(data);
+      }
     } catch (e) {
       setError(e);
     }
-  };
+  }, [count, setSimpsons, setError]);
 
   useEffect(() => {
     getSimpsons();
-  }, []);
+  }, [count, getSimpsons]);
+
+  // useEffect(() => {
+  //   const disk = get("formData");
+  //   if (disk) {
+  //     setFormData(disk);
+  //   }
+  // }, []);
 
   const onLikeToggle = (id) => {
     const _simpsons = [...simpsons];
@@ -64,7 +77,11 @@ const App = () => {
   };
 
   const onFormEvent = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
+    const newState = { ...formData, [e.target.id]: e.target.value };
+
+    setFormData(newState);
+
+    // store("formData", newState);
   };
 
   const getSimpsonsToDisplay = () => {
@@ -106,10 +123,10 @@ const App = () => {
   if (!simpsons) {
     return <p>Loading...</p>;
   }
-
+  console.log(formData);
   return (
     <>
-      <CharactersControls callback={onFormEvent} />
+      <CharactersControls callback={onFormEvent} formData={formData} />
       {getTotalLiked()}
       <Characters
         characters={getSimpsonsToDisplay()}

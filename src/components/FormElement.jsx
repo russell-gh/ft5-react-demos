@@ -1,16 +1,16 @@
 import React from "react";
 
-function FormElement({ callback, type, id, options }) {
+function FormElement({ callback, type, id, options, value }) {
   switch (type) {
     case "text":
-      return <input type="text" onInput={callback} id={id} />;
+      return <input type="text" onInput={callback} id={id} value={value} />;
 
     case "number":
-      return <input type="number" onInput={callback} id={id} />;
+      return <input type="number" onInput={callback} id={id} value={value} />;
 
     case "select":
       return (
-        <select id={id} onChange={callback}>
+        <select id={id} onChange={callback} value={value}>
           {options.map((option) => {
             return (
               <option key={option} value={option}>
