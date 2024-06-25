@@ -1,6 +1,7 @@
 import React from "react";
 
-function FormElement({ callback, type, id, options, value, label }) {
+function FormElement({ callback, type, id, options, value, label, error }) {
+  console.log(error);
   switch (type) {
     case "text":
     case "number":
@@ -16,20 +17,24 @@ function FormElement({ callback, type, id, options, value, label }) {
             value={value}
             onChange={() => {}}
           />
+          {error && <p>{error}</p>}
         </>
       );
 
     case "select":
       return (
-        <select id={id} onChange={callback} value={value}>
-          {options.map((option) => {
-            return (
-              <option key={option} value={option}>
-                {option}
-              </option>
-            );
-          })}
-        </select>
+        <>
+          <select id={id} onChange={callback} value={value}>
+            {options.map((option) => {
+              return (
+                <option key={option} value={option}>
+                  {option}
+                </option>
+              );
+            })}
+          </select>
+          {error && <p>{error}</p>}
+        </>
       );
 
     default:

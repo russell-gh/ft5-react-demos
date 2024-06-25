@@ -1,32 +1,24 @@
 import React, { useEffect, useState } from "react";
 import FormElement from "./components/FormElement";
 import Joi from "joi";
+import { validate } from "./validation/validate";
 
 const App = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
+  const [errors, setErrors] = useState({});
 
-  useEffect(() => {
-    validate();
-  }, [formData]);
+  const onInput = async (e) => {
+    //calc what form data should be
+    const _formData = { ...formData, [e.target.id]: e.target.value };
 
-  const onInput = (e) => {
-    setFormData({ ...formData, [e.target.id]: e.target.value });
-  };
+    //store in state
+    setFormData(_formData);
 
-  const schema = {
-    email: Joi.string().email({ tlds: { allow: false } }),
-    password: Joi.string().min(8).max(32),
-  };
+    //validate
+    const result = await validate(formData, "login");
 
-  const validate = async () => {
-    const _joi = Joi.object(schema);
-
-    try {
-      const result = await _joi.validateAsync(formData);
-      console.log("All Valid");
-    } catch (e) {
-      console.log(e);
-    }
+    //set errors
+    setErrors(result);
   };
 
   return (
@@ -37,6 +29,7 @@ const App = () => {
           type="email"
           id="email"
           value={formData.email}
+          error={errors.email}
           label="Email: "
         />
         <FormElement
@@ -44,6 +37,7 @@ const App = () => {
           type="password"
           id="password"
           value={formData.password}
+          error={errors.password}
           label="Password: "
         />
       </form>
