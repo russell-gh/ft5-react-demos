@@ -1,12 +1,23 @@
 import React from "react";
 
-function FormElement({ callback, type, id, options, value }) {
+function FormElement({ callback, type, id, options, value, label }) {
   switch (type) {
     case "text":
-      return <input type="text" onInput={callback} id={id} value={value} />;
-
     case "number":
-      return <input type="number" onInput={callback} id={id} value={value} />;
+    case "email":
+    case "password":
+      return (
+        <>
+          <label htmlFor={id}>{label}</label>
+          <input
+            type={type}
+            onInput={callback}
+            id={id}
+            value={value}
+            onChange={() => {}}
+          />
+        </>
+      );
 
     case "select":
       return (
