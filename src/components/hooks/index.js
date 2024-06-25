@@ -1,5 +1,6 @@
 //custom hook
 import { useEffect, useState } from "react";
+import { validate } from "../../validation/validate";
 
 export function useLocalStorage({ key, initialValue }) {
   const [state, setState] = useState(() => {
@@ -11,4 +12,20 @@ export function useLocalStorage({ key, initialValue }) {
   }, [key, state]);
 
   return [state, setState];
+}
+
+export function useValidate(formData, schema) {
+  const [state, setState] = useState(formData);
+  const [errors, setErrors] = useState({});
+
+  const go = async () => {
+    const errors = await validate(state, schema);
+    setErrors(errors);
+  };
+
+  useEffect(() => {
+    go();
+  }, [state]);
+
+  return [state, setState, errors];
 }

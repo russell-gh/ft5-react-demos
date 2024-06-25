@@ -1,7 +1,6 @@
 import React from "react";
 
 function FormElement({ callback, type, id, options, value, label, error }) {
-  console.log(error);
   switch (type) {
     case "text":
     case "number":
