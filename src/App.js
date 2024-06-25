@@ -1,7 +1,7 @@
-import React, { useEffect, useState } from "react";
-import FormElement from "./components/FormElement";
-import Joi from "joi";
+import React, { useState } from "react";
+
 import { validate } from "./validation/validate";
+import LoginForm from "./components/LoginForm";
 
 const App = () => {
   const [formData, setFormData] = useState({ email: "", password: "" });
@@ -24,22 +24,7 @@ const App = () => {
   return (
     <>
       <form>
-        <FormElement
-          callback={onInput}
-          type="email"
-          id="email"
-          value={formData.email}
-          error={errors.email}
-          label="Email: "
-        />
-        <FormElement
-          callback={onInput}
-          type="password"
-          id="password"
-          value={formData.password}
-          error={errors.password}
-          label="Password: "
-        />
+        <LoginForm callback={onInput} errors={errors} formData={formData} />
       </form>
     </>
   );
