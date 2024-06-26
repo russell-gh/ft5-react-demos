@@ -51,7 +51,7 @@ export function reducer(state = initialState, action) {
 
       copy.push({
         userId: 1,
-        title: state.todoText,
+        title: action.text,
         completed: false,
         id: state.lastIssueId,
       });
