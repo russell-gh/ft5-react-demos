@@ -8,7 +8,7 @@ import { reducer } from "./redux/reducer";
 import { Provider } from "react-redux";
 
 //create a redux store
-const store = createStore(
+export const store = createStore(
   reducer,
   window.__REDUX_DEVTOOLS_EXTENSION__ && window.__REDUX_DEVTOOLS_EXTENSION__()
 );

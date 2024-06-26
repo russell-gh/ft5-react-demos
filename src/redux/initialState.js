@@ -1,1 +1,1 @@
-export const initialState = { lastIssueId: 0 };
+export const initialState = {};
