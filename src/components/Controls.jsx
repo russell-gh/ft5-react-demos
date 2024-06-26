@@ -1,5 +1,5 @@
 import { useDispatch } from "react-redux";
-import { ADD_TODO, SET_TODO_TEXT } from "../redux/types";
+import { ADD_TODO } from "../redux/types";
 import { useState } from "react";
 
 const Controls = () => {
