@@ -5,6 +5,8 @@ import Characters from "./components/Characters";
 import CharactersControls from "./components/CharactersControls";
 // import { get, store } from "./utils/storage";
 import { useLocalStorage } from "./components/hooks";
+import { Routes, Route } from "react-router-dom";
+import OneItem from "./components/OneItem";
 
 const App = () => {
   const [simpsons, setSimpsons] = useLocalStorage({ key: "simpsons" });
@@ -123,16 +125,26 @@ const App = () => {
   if (!simpsons) {
     return <p>Loading...</p>;
   }
-  console.log(formData);
+
   return (
     <>
-      <CharactersControls callback={onFormEvent} formData={formData} />
-      {getTotalLiked()}
-      <Characters
-        characters={getSimpsonsToDisplay()}
-        onLikeToggle={onLikeToggle}
-        onDelete={onDelete}
-      />
+      <Routes>
+        <Route path="/:name" element={<OneItem />} />
+        <Route
+          path="*"
+          element={
+            <>
+              <CharactersControls callback={onFormEvent} formData={formData} />
+              {getTotalLiked()}
+              <Characters
+                characters={getSimpsonsToDisplay()}
+                onLikeToggle={onLikeToggle}
+                onDelete={onDelete}
+              />
+            </>
+          }
+        />
+      </Routes>
     </>
   );
 };

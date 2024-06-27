@@ -1,5 +1,6 @@
 import React from "react";
 import Character from "./Character";
+import { Link } from "react-router-dom";
 
 function Characters({ characters, onLikeToggle, onDelete }) {
   return (
@@ -15,17 +16,20 @@ function Characters({ characters, onLikeToggle, onDelete }) {
         } = character;
 
         return (
-          <Character
-            key={id}
-            id={id}
-            name={name}
-            quote={quote}
-            image={image}
-            liked={liked}
-            characterDirection={characterDirection}
-            onLikeToggle={onLikeToggle}
-            onDelete={onDelete}
-          />
+          <>
+            <Character
+              key={id}
+              id={id}
+              name={name}
+              quote={quote}
+              image={image}
+              liked={liked}
+              characterDirection={characterDirection}
+              onLikeToggle={onLikeToggle}
+              onDelete={onDelete}
+            />
+            <Link to={"/" + name}>View more</Link>
+          </>
         );
       })}
     </div>
